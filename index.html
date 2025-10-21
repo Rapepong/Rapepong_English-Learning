@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Words English</title>
+  <!-- TailwindCSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- PapaParse (CSV parser) -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="max-w-5xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold">Words English</h1>
+    <p class="text-sm text-gray-600 mt-1">ดึงข้อมูลจาก <code>words.csv</code> และแสดงทันทีเมื่อโหลดหน้าเว็บ</p>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 pb-16">
+    <!-- กล่องสรุปเล็กๆ -->
+    <div id="stats" class="mb-4 hidden">
+      <div class="inline-flex items-center gap-2 text-sm bg-white border rounded-xl px-3 py-2 shadow-sm">
+        <span class="font-medium">จำนวนคำทั้งหมด:</span>
+        <span id="totalCount" class="px-2 py-0.5 rounded-lg bg-gray-100"></span>
+      </div>
+    </div>
+
+    <!-- Controls: Start Quiz / Show All Words -->
+    <div class="mb-4 flex gap-2">
+      <button id="btnShowAll" class="view-btn px-4 py-2 rounded-2xl">Show All Words</button>
+      <button id="btnStartQuiz" class="view-btn px-4 py-2 rounded-2xl">Start Quiz</button>
+    </div>
+
+    <!-- Quiz card: show English + POS, Thai hidden until reveal -->
+    <div id="quizCard" class="mb-6 hidden">
+      <div class="bg-white border rounded-2xl p-6 pb-50 shadow-sm flex flex-col">
+        <div class="flex items-start gap-4 flex-1">
+          <div class="grow">
+            <!-- หัวข้อ + ปุ่มหัวใจแสดงสถานะ favorite -->
+            <div class="flex items-center gap-2">
+              <div id="quizEnglish" class="text-2xl font-bold text-gray-800">—</div>
+              <button id="quizFav"
+                      class="rounded-full px-2 py-0.5 text-sm border bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      title="Toggle favorite"
+                      aria-pressed="false">♥</button>
+            </div>
+            <div id="quizPOS" class="mt-2"></div><br>
+            <!-- ใช้ invisible แทน hidden เพื่อ "จองที่" กันปุ่มกระดิก จริง -->
+            <div id="quizThai" class="mt-4 text-lg text-teal-700 invisible"></div><br>
+          </div>
+          <div class="shrink-0 text-sm text-gray-500" id="quizProgress">0 / 0</div>
+        </div>
+
+        <div class="mt-auto flex gap-2">
+          <button id="btnBackQuiz" class="px-4 py-2 rounded-2xl bg-slate-200 hover:bg-slate-300">Back</button>
+          <!-- กำหนด width คงที่ ป้องกันขยับเมื่อสลับข้อความ Reveal/Next -->
+          <button id="btnReveal" class="px-6 py-2 rounded-2xl text-white transition-none" style="width:110px; background-color:#f59e0b" data-mode="reveal">Reveal</button>
+          <button id="btnResetQuiz" class="px-4 py-2 rounded-2xl bg-slate-200 hover:bg-slate-300">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ตารางคำศัพท์ -->
+    <div id="tableContainer" class="overflow-x-auto bg-white border rounded-2xl shadow-sm">
+      <table class="min-w-full text-sm">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="text-center font-semibold px-4 py-3" style="width: 40px;">♥</th>
+            <th class="text-left font-semibold px-4 py-3">#</th>
+            <th class="text-left font-semibold px-4 py-3">English</th>
+            <th class="text-left font-semibold px-4 py-3">Thai</th>
+            <th class="text-left font-semibold px-4 py-3">POS</th>
+          </tr>
+        </thead>
+        <tbody id="wordsBody" class="divide-y"></tbody>
+      </table>
+    </div>
+
+    <!-- ข้อความโหลด / error -->
+    <div id="statusBox" class="mt-6 text-sm text-gray-600"></div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

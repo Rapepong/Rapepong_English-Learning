@@ -1,0 +1,29 @@
+/* <style> */
+    /* Alternate row coloring: odd / even rows for better readability */
+    table tbody tr:nth-child(odd) td { background-color: #ffffff; }
+    table tbody tr:nth-child(even) td { background-color: #f8fafcdc; }
+    /* Accent: English column (3rd) slightly bolder */
+    table tbody tr td:nth-child(3) { color: #0f172a; font-weight:600; }
+    /* Accent: Thai column (4th) teal tint */
+    table tbody tr td:nth-child(4) { color: #0f766e; }
+    /* View buttons: default gray, active purple */
+    .view-btn { background-color: #e5e7eb; color: #111827; }
+    .view-btn.active { background-color: #6d28d9; color: #fff; }
+    /* Reset button hover */
+    #btnBackQuiz:hover { background-color: #328aed !important; color: white !important; }
+    #btnResetQuiz:hover { background-color: #ef4444 !important; color: white !important; }
+    /* Heart icon styles in table */
+    .heart-cell { position: relative; width: 40px; text-align: center; }
+    .heart-icon { 
+      cursor: pointer; 
+      font-size: 20px; 
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      user-select: none;
+      display: inline-block;
+    }
+    table tbody tr:hover .heart-icon { opacity: 0.3; }
+    .heart-icon:hover { opacity: 1 !important; transform: scale(1.2); }
+    .heart-icon.favorited { opacity: 1 !important; color: #ef4444; }
+    table tbody tr.favorited { background-color: #fef2f2 !important; }
+/* </style> */
